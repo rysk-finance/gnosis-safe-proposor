@@ -2,6 +2,7 @@
 
 ## For the purposes of rysk when operating
 
+0. npm install
 1. Get the data from the cor library by running one of the get data functions in rysk_actions
 2. run:
 `npx ts-node src/proposer-tx.ts --safe <safe> --chainId <chainId> --to <to> --data <data>`
