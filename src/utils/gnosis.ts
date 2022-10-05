@@ -3,6 +3,8 @@ import axios from 'axios';
 const CHAIN_PREFIXES = {
   1: '',
   4: '.rinkeby',
+  42161: '.arbitrum'
+
 };
 
 export const SUPPORTED_CHAINS = Object.keys(CHAIN_PREFIXES).map(Number);

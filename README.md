@@ -1,6 +1,12 @@
-[![image](https://img.shields.io/npm/v/@defi-wonderland/gnosis-safe-proposor.svg?style=flat-square)](https://www.npmjs.org/package/@defi-wonderland/gnosis-safe-proposor)
-
 # Gnosis Safe Proposor
+
+## For the purposes of rysk when operating
+
+1. Get the data from the cor library by running one of the get data functions in rysk_actions
+2. run:
+`npx ts-node src/proposer-tx.ts --safe <safe> --chainId <chainId> --to <to> --data <data>`
+3. give your private key
+
 
 Just the right tool to easily propose transactions to a [Gnosis Safe](https://gnosis-safe.io/).
 

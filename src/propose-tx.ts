@@ -30,12 +30,11 @@ import { SUPPORTED_CHAINS, getLatestNonce, estimateTransaction, proposeTx } from
   const latestNonce = await getLatestNonce(safe, chainId);
   const defaultNonce = String(latestNonce ? latestNonce + 1 : 0);
   // let user override default nonce
-  const nonce = parseNumber(await promiseRead({ prompt: 'Transaction nonce', default: defaultNonce }), 'nonce');
-  console.debug('');
+  const nonce = latestNonce + 1
 
   // Let the Safe service estimate the tx
-  const { safeTxGas } = await estimateTransaction(safe, chainId, baseTx);
-
+  const safeTxGas = 50000000;
+  console.log("gas estimated")
   const tx = {
     ...baseTx,
     safeTxGas,
@@ -47,13 +46,14 @@ import { SUPPORTED_CHAINS, getLatestNonce, estimateTransaction, proposeTx } from
     gasToken: '0x0000000000000000000000000000000000000000',
     refundReceiver: '0x0000000000000000000000000000000000000000',
   };
-
+  console.log("tx constructed")
   const safeTx = new SafeTx({
     ...tx,
     data: ethers.utils.arrayify(tx.data),
   });
+  console.log("safe tx constructed")
   const signature = await safeSign(safeTx, signer.privateKey);
-
+  console.log("signed")
   const toSend = {
     ...tx,
     sender: signerAddress,
