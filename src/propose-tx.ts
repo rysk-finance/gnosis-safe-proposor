@@ -6,17 +6,13 @@ import { hideBin } from 'yargs/helpers';
 import { BigNumber, ethers } from 'ethers';
 import { parseAddress, parsePrivateKey, parseNumber, promiseRead, createSafeTx, safeSign } from './utils/misc';
 import { SUPPORTED_CHAINS, getLatestNonce, estimateTransaction, proposeTx } from './utils/gnosis';
-
+import * as dotenv from "dotenv"
 (async () => {
   const { safe, chainId, to, data, value, operation } = getArguments();
-
+  dotenv.config({ path: __dirname + "/.env" })
   // wait for user to input delegate private key
   const signer = parsePrivateKey(
-    await promiseRead({
-      prompt: 'Delegate private key (hidden)',
-      silent: true,
-      replace: '*',
-    }),
+    process.env.PRIVATE_KEY
   );
   const signerAddress = new ethers.Wallet(signer.privateKey).address;
 
@@ -74,11 +70,11 @@ import { SUPPORTED_CHAINS, getLatestNonce, estimateTransaction, proposeTx } from
   console.info('');
 
   // wait for user confirmation before sending tx proposal
-  const confirmation = await promiseRead({ prompt: 'Confirm', default: 'Y' });
-  if (['y', 'yes', 'yeah'].indexOf(confirmation.toLowerCase()) === -1) {
-    console.warn('Confirmation declined');
-    return;
-  }
+  // const confirmation = await promiseRead({ prompt: 'Confirm', default: 'Y' });
+  // if (['y', 'yes', 'yeah'].indexOf(confirmation.toLowerCase()) === -1) {
+  //   console.warn('Confirmation declined');
+  //   return;
+  // }
 
   // send tx proposal
   await proposeTx(safe, chainId, toSend);
